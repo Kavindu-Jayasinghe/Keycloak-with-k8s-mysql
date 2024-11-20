@@ -1,7 +1,7 @@
 # Keycloak and MySQL Deployment with Kubernetes
-### For dev envirement use keycloak-dev-deployment.yaml for production use keycloak-prod-deployment.yaml(change configurations as need mainly ``` KC_HOSTNAME_ADMIN_URL ``` and ``` KC_HOSTNAME ``` )
-This project provides Kubernetes manifests to deploy a Keycloak server with a MySQL database as its backend. It includes configurations for deployment, secrets management, and service exposure.
 
+This project provides Kubernetes manifests to deploy a Keycloak server with a MySQL database as its backend. It includes configurations for deployment, secrets management, and service exposure.
+For dev envirement use ```keycloak-dev-deployment.yaml``` for production use ```keycloak-prod-deployment.yaml```(change configurations as need mainly ``` KC_HOSTNAME_ADMIN_URL ``` and ``` KC_HOSTNAME ``` )
 
 ## Table of Contents
 
