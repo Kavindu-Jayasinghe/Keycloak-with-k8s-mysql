@@ -2,7 +2,6 @@
 
 This project provides Kubernetes manifests to deploy a Keycloak server with a MySQL database as its backend. It includes configurations for deployment, secrets management, and service exposure.
 
-For dev envirement use ```keycloak-dev-deployment.yaml``` for production use ```keycloak-prod-deployment.yaml```(change configurations as need mainly ``` KC_HOSTNAME_ADMIN_URL ``` and ``` KC_HOSTNAME ``` )
 
 ## Table of Contents
 
@@ -140,4 +139,6 @@ kubectl port-forward svc/keycloak 8089:8089
 Production Recommendations:
 
 * Replace emptyDir volumes with Persistent Volumes.
-* Use Ingress to expose services securely with TLS.
+* Use Ingress to expose services securely with TLS in production.
+* For dev envirement use ```keycloak-dev-deployment.yaml``` for production use ```keycloak-prod-deployment.yaml```(change configurations as need mainly ``` KC_HOSTNAME_ADMIN_URL ``` and ``` KC_HOSTNAME ``` )
+
