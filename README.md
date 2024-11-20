@@ -74,18 +74,18 @@ kubectl apply -f keycloak-service.yaml
 
 Keycloak Deployment
 
-Variable
-Description
-DB_HOST
-Hostname of the MySQL database (default: mysql).
-KC_DB_USERNAME
-MySQL username for Keycloak.
-KC_DB_PASSWORD
-MySQL password for Keycloak.
-KEYCLOAK_ADMIN
-Admin username for Keycloak.
-KEYCLOAK_ADMIN_PASSWORD
-Admin password for Keycloak.
+|Variable|Description| 
+|-----------|--------------|
+|DB_HOST|
+Hostname of the MySQL database (default: mysql).|
+|KC_DB_USERNAME|
+MySQL username for Keycloak.|
+|KC_DB_PASSWORD|
+MySQL password for Keycloak.|
+|KEYCLOAK_ADMIN|
+Admin username for Keycloak.|
+|KEYCLOAK_ADMIN_PASSWORD|
+Admin password for Keycloak.|
 
 (db user-name and password Values are inject from secrets)
 MySQL Deployment
