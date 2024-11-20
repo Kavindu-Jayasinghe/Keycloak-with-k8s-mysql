@@ -1,0 +1,121 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak
+  namespace: default
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+      - name: keycloak
+        image: quay.io/keycloak/keycloak:latest #quay.io/keycloak/keycloak:25.0.6  #   # "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        command: ["/opt/keycloak/bin/kc.sh"]
+        args: [
+          "start-dev",  # start the development server
+          "--cache-stack=kubernetes",
+          "--spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true",
+          "--db", "mysql",    # db type mysql
+          "--db-url-host", "$(DB_HOST)",          # (db user-name and password Values are inject from environment variables)
+          "--db-username", "$(KC_DB_USERNAME)",
+          "--db-password", "$(KC_DB_PASSWORD)"
+        ]
+        env:
+        # - name: KC_DB_MIGRATION
+        #   value: "false"
+        - name: DB_HOST
+          value: "mysql"
+          
+        - name: KC_DB_USERNAME   # (db user-name and password Values are inject from secrets)
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret 
+              key: db-username
+        - name: KC_DB_PASSWORD   
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret 
+              key: db-password
+        - name: KEYCLOAK_ADMIN
+          value: "admin1"
+        - name: KEYCLOAK_ADMIN_PASSWORD
+          value: "admin"
+        - name: KC_HOSTNAME_STRICT_HTTPS
+          value: "true"
+        - name: jgroups.dns.query
+          value: "keycloak"
+        - name: PROXY_ADDRESS_FORWARDING
+          value: "true"
+        - name: KC_HEALTH_ENABLED
+          value: "true"
+        - name: KC_METRICS_ENABLED
+          value: "true"
+        - name: KC_HTTP_ENABLED
+          value: "true"
+        - name: KC_HTTP_RELATIVE_PATH
+          value: "/auth"
+      
+        - name: KC_HOSTNAME_ADMIN_URL
+          value: "http://localhost:8089/auth/" # change if need with your actual domain like keycloak.your-domain.com
+        # - name: KC_DB
+        #   value: "mysql"
+        # - name: KC_DB_URL
+        #   value: "jdbc:mysql://127.0.0.1/keycloak_db"
+        # - name: KC_DB_URL_HOST
+        #   value: "127.0.0.1"
+        # - name: KC_DB_URL_PORT
+        #   value: "3306" 
+        - name: KC_DB_URL_DATABASE
+          value: "keycloak_db"
+        # - name: KC_DB_USERNAME
+        #   value: ""
+        # - name: KC_DB_PASSWORD
+        #   value: ""
+        - name: KC_HOSTNAME
+          value: "localhost"   # change if need with your actual domain like keycloak.your-domain.com
+        - name: JTA_OBJECT_STORE_DIR
+          value: "/opt/keycloak/data/transaction-logs"
+        - name: KEYCLOAK_THEME
+          value: custom-theme
+        ports:
+        - name: http
+          containerPort: 8080
+        - name: jgroups
+          containerPort: 7600
+        volumeMounts:                    # volumeMounts for persistent storage for keycloak data and transaction logs
+        - mountPath: /opt/keycloak/data 
+          name: keycloak-data
+        - mountPath: /opt/keycloak/data/transaction-logs
+          name: keycloak-txn-logs
+        livenessProbe:
+          httpGet:
+            path: /auth           
+            port: 8080
+          initialDelaySeconds: 180
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /auth
+            port: 8080
+          initialDelaySeconds: 120
+          periodSeconds: 10
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "200m"
+          limits:
+            memory: "4Gi"
+            cpu: "500m"
+      volumes:
+      - name: keycloak-data
+        emptyDir: {}
+      - name: keycloak-txn-logs
+        emptyDir: {}

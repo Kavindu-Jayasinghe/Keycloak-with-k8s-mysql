@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak-ingress
+  namespace: default
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 2500m
+    nginx.ingress.kubernetes.io/proxy-buffer-size: 12k
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: your-domain.com  # change your-domain.com with your actual domain
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: keycloak
+                port:
+                  number: 8089
+  tls:
+    - hosts:
+        - your-domain.com   # change your-domain.com with your actual domain
+      secretName: keycloak-tls
+
+     

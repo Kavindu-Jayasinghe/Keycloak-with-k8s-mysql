@@ -1,0 +1,14 @@
+
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: keycloak
+  namespace: default
+spec:
+  secretName: keycloak-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  commonName: your-domain.com  # change your-domain.com with your actual domain
+  dnsNames:
+  - your-domain.com  # change your-domain.com with your actual domain
