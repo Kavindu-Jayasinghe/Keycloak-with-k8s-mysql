@@ -81,7 +81,8 @@ Keycloak Deployment
 |KC_DB_PASSWORD|MySQL password for Keycloak.|
 |KEYCLOAK_ADMIN|Admin username for Keycloak.|
 |KEYCLOAK_ADMIN_PASSWORD|Admin password for Keycloak.|
-
+|KC_HOSTNAME_ADMIN_URL|The specific URL for accessing the Keycloak admin console.|
+KC_HOSTNAME|The external hostname used to access Keycloak.|
 
 (db user-name and password Values are inject from secrets)
 MySQL Deployment
