@@ -28,39 +28,39 @@ This project provides Kubernetes manifests to deploy a Keycloak server with a My
 
 ## Manifests Included
 
-1. Keycloak Deployment
+### 1. Keycloak Deployment
 
 * Keycloak server deployed with environment variables for MySQL database connection.
 * Custom configurations for probes, caching, and administrative settings.
 
-2. MySQL Deployment
+### 2. MySQL Deployment
 
 * MySQL database with pre-configured root and user credentials.
 * Secrets for securely managing sensitive information.
 
-3. Secrets
+### 3. Secrets
 
 * Encrypted database credentials using Base64.
 
-4. Services
+### 4. Services
 
 * MySQL service exposed as a LoadBalancer for external access.
 
 ## Deployment Instructions
 
-1. Deploy the MySQL Database and secrets:
+### 1. Deploy the MySQL Database and secrets:
 ```
 kubectl apply -f mysql.yaml
 ```
-3. Deploy Keycloak:
+### 3. Deploy Keycloak:
 ```
 kubectl apply -f keycloak-<dev/prod>-deployment.yaml
 ```
-5. Deploy svc:
+### 5. Deploy svc:
 ```
 kubectl apply -f keycloak-service.yaml
 ```
-7. Verify the Deployments:
+### 7. Verify the Deployments:
 
 * Check pods:
 ```
