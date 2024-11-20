@@ -5,13 +5,13 @@ This project provides Kubernetes manifests to deploy a Keycloak server with a My
 
 ## Table of Contents
 
-1. Overview
-2. Prerequisites
-3. Manifests Included
-4. Deployment Instructions
-5. Environment Variables
-6. Customization
-7. Notes
+1. - [Overview](#Overview)
+2. - [Prerequisites](#Prerequisites)
+3. - [Manifests Included](#Manifests-Included)
+4. - [Deployment Instructions](#Deployment-Instructions)
+5. - [Environment Variables](#Environment-Variables)
+6. - [Customization](#Customization)
+7. - [Notes](#Notes)
 
 ## Overview
 
